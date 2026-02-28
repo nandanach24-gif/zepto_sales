@@ -10,30 +10,62 @@ Using SQL, the project performs data exploration, data cleaning, and business-dr
 
 ### Table: `zepto`
 
-| Column Name | Data Type | Description |
-|-------------|-----------|------------|
-| sku_id | SERIAL (Primary Key) | Unique product identifier |
-| category | VARCHAR(120) | Product category |
-| name | VARCHAR(150) | Product name |
-| mrp | NUMERIC(8,2) | Maximum Retail Price |
-| discountPercent | NUMERIC(5,2) | Discount percentage |
-| availableQuantity | INTEGER | Available stock quantity |
-| discountedSellingPrice | NUMERIC(8,2) | Final selling price |
-| weightInGms | INTEGER | Product weight (grams) |
-| outOfStock | BOOLEAN | Stock availability status |
-| quantity | INTEGER | Total quantity |
+🧾 Columns:
+- **sku_id:** Unique identifier for each product entry (Synthetic Primary Key)
 
----
+- **name:** Product name as it appears on the app
+
+- **category:** Product category like Fruits, Snacks, Beverages, etc.
+
+- **mrp:** Maximum Retail Price (originally in paise, converted to ₹)
+
+- **discountPercent:** Discount applied on MRP
+
+- **discountedSellingPrice:** Final price after discount (also converted to ₹)
+
+- **availableQuantity:** Units available in inventory
+
+- **weightInGms:** Product weight in grams
+
+- **outOfStock:** Boolean flag indicating stock availability
+
+- **quantity:** Number of units per package (mixed with grams for loose produce)
 
 ## 🔎 Project Workflow
 
-### 1️⃣ Data Exploration
-- Count total records
-- View sample data
-- Identify null values
-- Find duplicate product names
-- Explore distinct categories
-- Analyze in-stock vs out-of-stock products
+### 1. Database & Table Creation
+We start by creating a SQL table with appropriate data types:
+
+```sql
+CREATE TABLE zepto (
+  sku_id SERIAL PRIMARY KEY,
+  category VARCHAR(120),
+  name VARCHAR(150) NOT NULL,
+  mrp NUMERIC(8,2),
+  discountPercent NUMERIC(5,2),
+  availableQuantity INTEGER,
+  discountedSellingPrice NUMERIC(8,2),
+  weightInGms INTEGER,
+  outOfStock BOOLEAN,
+  quantity INTEGER
+);
+```
+### 2. Data Import
+- Loaded CSV using   Mysql's import feature.
+
+### 3. 🔍 Data Exploration
+- Counted the total number of records in the dataset
+
+- Viewed a sample of the dataset to understand structure and content
+
+- Checked for null values across all columns
+
+- Identified distinct product categories available in the dataset
+
+- Compared in-stock vs out-of-stock product counts
+
+- Detected products present multiple times, representing different SKUs
+- 
 
 ### 2️⃣ Data Cleaning
 - Removed products with MRP = 0
